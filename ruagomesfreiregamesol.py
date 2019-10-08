@@ -17,4 +17,4 @@ class SearchProblem:
     ##
     return []
 
-    
+
