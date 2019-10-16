@@ -26,7 +26,7 @@ def plotpath(P,coords):
     plt.axis('off')
     fig = plt.gcf()
     fig.set_size_inches(1.*18.5, 1.*10.5)
-    # fig.savefig('test2png.png', dpi=100)
+    fig.savefig('test2png.png', dpi=100)
     plt.show()
 
 
