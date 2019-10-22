@@ -31,20 +31,21 @@ class SearchProblem:
 		self.exp = list()
 		self.gen = list()
 		self.path = list()
+		self.pathWeight = [0] * self.n_agents
 		return
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.source = init
-		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(0, self.n_agents))
+		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
 		self.sel = self.source
+		self.gen = [[s_agent] for s_agent in self.source]
 
 		# [self.sel[i][-1] for i in range(0, self.n_agents)]
+
 		while self.sel != self.goal:
-			# expand each agent
-			# for each agent get min h for gen node
-			for a in self.sel:
-				for [transport, b] in self.graph[a]:
-					pass
+			for agent in range(self.n_agents):
+
+
 				# expand(agent)
 				# add expanded to gen 
 				pass
