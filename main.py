@@ -38,9 +38,9 @@ class SearchProblem:
 		self.graph = model
 		self.n_agents = len(self.goal)
 
-		self.sel = [[]]*self.n_agents
+		self.sel = None
 		self.exp = list()
-		self.gen = [[]]*self.n_agents
+		self.gen = [[] for i in range(self.n_agents)]
 
 		self.path = list()
 		return
@@ -56,13 +56,19 @@ class SearchProblem:
 			for a in range(self.n_agents):
 				# Now we got the selected of each agent
 
+				# vv Se ja chegou a solucao do agente, sair vv
+				if (self.sel[a][-1].n == self.goal[a] and self.sel[a][-1].depth == self.limit): continue
+
 				# vv Expandir o selecionado vv
 				for [transport, child_n] in self.graph[self.sel[a][-1].n]:
 					# # Verificar se ja existia o child no selected ou no gen
 					# if child in self.sel[a] or child in self.gen[a]: continue
 
 					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1)
-					if child.depth <= self.limit: self.gen[a].append(child) # <-- Gerar
+					# if child.depth < self.limit or child.n == self.goal[a]:
+					# if child.depth <= self.limit :
+					if child.depth + self.h[child.n][self.goal[a]] <= self.limit : 
+						self.gen[a].append(child) # <-- Gerar
 
 				self.sel[a].append(self.gen[a].pop()) # <-- Gerado é selecionado
 
@@ -80,8 +86,7 @@ class SearchProblem:
 
 		return back
 		
-SP = SearchProblem(goal=[113], model=U)
-I = [18]
-
+I = [1, 1]
+SP = SearchProblem(goal=[2, 3], model=U)
 print(SP.search(I, limitexp=2000))
 pass
