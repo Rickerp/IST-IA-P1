@@ -20,7 +20,7 @@ class Node:
 		self.n = number
 		self.parent = parent
 		self.depth = depth
-		self.ticketUsed = ticketUsed
+		self.ticket = ticketUsed
 		return
 
 class SearchProblem:
@@ -44,12 +44,33 @@ class SearchProblem:
 		self.sol = None
 		return
 
-	def searchLimited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+	def get_path(self, combs):
+		path = []
+
+		for a in range(self.n_agents):
+			path.append([])
+			i_node = self.sol[a][combs[a]]
+			while i_node != None:
+				path[a] = [i_node.n] + path[a]
+				i_node = i_node.parent
+
+		for i in range(len(path)):
+			play = [path[a][i] for a in range(self.n_agents)]
+			if len(play) != len(set(play)):
+				for n in range(1, len(combs) + 1):
+					combs[-n] = (combs[-n] + 1) % len(self.sol[-n])
+					if combs[-n] != 0: return self.get_path(combs)
+				return None
+		
+		return path
+
+
+	def search_limited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.sel = [[Node(sel_a, None, 0)] for sel_a in self.source]
-		self.sol = [[] for _ in range(self.n_agents)]
+		self.sol = [[] for i in range(self.n_agents)]
 
 		emptyGen = [[] for i in range(self.n_agents)]
-		self.gen = emptyGen[:]
+		self.gen = [[] for i in range(self.n_agents)]
 		first = True
 
 		while self.gen != emptyGen or first:
@@ -58,7 +79,7 @@ class SearchProblem:
 			for a in range(self.n_agents):
 				# vv Se ja chegou a solucao do agente, sair vv
 				if self.sel[a][-1].n == self.goal[a] and self.sel[a][-1].depth == self.limit:
-					self.sol[a].append(self.sol[a][-1])
+					self.sol[a].append(self.sel[a][-1])
 
 				# vv Expandir o selecionado vv
 				for [transport, child_n] in self.graph[self.sel[a][-1].n]:
@@ -70,19 +91,30 @@ class SearchProblem:
 					if child.depth + self.h[child.n][self.goal[a]] <= self.limit:
 						self.gen[a].append(child)  # <-- Gerar
 
-				self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
+				# vv Se no agente nao houver gerados nem solucao, aumentar limite vv
+				if not self.gen[a] and not self.sol[a]: 
+					self.limit += 1
+					return self.search_limited(self.source, limitexp, limitdepth, tickets)
+				
+				if self.gen[a]:
+					self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
 
 		if [] in self.sol: # Se a solucao de um agente for uma lista vazia
 			self.limit += 1
+			return self.search_limited(self.source, limitexp, limitdepth, tickets)
+
+		path = self.get_path([0, 0, 0])
+		if not path: 	
+			self.limit += 1
 			return self.searchLimited(self.source, limitexp, limitdepth, tickets)
 
-		return 
+		return path
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.source = init
 		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
 
-		return self.searchLimited(init, limitexp, limitdepth, tickets)
+		return self.search_limited(init, limitexp, limitdepth, tickets)
 
 I = [30, 40, 109]
 SP = SearchProblem(goal=[63, 61, 70], model=U)
