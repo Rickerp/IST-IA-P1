@@ -71,8 +71,9 @@ class SearchProblem:
 						self.gen[a].append(child)  # <-- Gerar
 				if not self.gen[a]:
 					self.limit += 1
-					return self.searchLimited(init, limitexp, limitdepth, tickets)
+					return self.searchLimited(self.source, limitexp, limitdepth, tickets)
 				self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
+
 		back = list()
 		for agent in range(self.n_agents):
 			back.append([])
@@ -84,6 +85,13 @@ class SearchProblem:
 
 			back[agent] = [node_i.n] + back[agent]
 
+		for i in range(len(back)):
+			l = [back[a][i] for a in range(self.n_agents)]
+			# vv Sera que podemos aumentar mais que um ? vv
+			self.limit += 1
+			if len(l) != len(set(l)): 
+				return self.searchLimited(self.source, limitexp, limitdepth, tickets)
+
 		return back
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
@@ -92,7 +100,7 @@ class SearchProblem:
 
 		return self.searchLimited(init, limitexp, limitdepth, tickets)
 
-I = [1, 1]
-SP = SearchProblem(goal=[2, 3], model=U)
+I = [1, 7]
+SP = SearchProblem(goal=[4, 3], model=U)
 print(SP.search(I, limitexp=2000))
 pass
