@@ -51,11 +51,11 @@ class SearchProblem:
 			path.append([])
 			i_node = self.sol[a][combs[a]]
 			while i_node != None:
-				path[a] = [i_node.n] + path[a]
+				path[a] = [i_node] + path[a]
 				i_node = i_node.parent
 
 		for i in range(len(path)):
-			play = [path[a][i] for a in range(self.n_agents)]
+			play = [path[a][i].n for a in range(self.n_agents)]
 			if len(play) != len(set(play)):
 				for n in range(1, len(combs) + 1):
 					combs[-n] = (combs[-n] + 1) % len(self.sol[-n])
@@ -108,7 +108,11 @@ class SearchProblem:
 			self.limit += 1
 			return self.searchLimited(self.source, limitexp, limitdepth, tickets)
 
-		return path
+		formatted_path = [[[], [i[0].n for i in path]]]
+		for i in range(1, self.limit + 1):
+			formatted_path.append([[a[i].ticket for a in path], [a[i].n for a in path]])
+		return formatted_path
+
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.source = init
