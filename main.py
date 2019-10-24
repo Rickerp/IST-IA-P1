@@ -64,7 +64,7 @@ class SearchProblem:
 					# # Verificar se ja existia o child no selected ou no gen
 					# if child in self.sel[a] or child in self.gen[a]: continue
 
-					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1)
+					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1, transport)
 					# if child.depth < self.limit or child.n == self.goal[a]:
 					# if child.depth <= self.limit :
 					if child.depth + self.h[child.n][self.goal[a]] <= self.limit:
@@ -80,27 +80,31 @@ class SearchProblem:
 			node_i = self.sel[agent][-1]
 
 			while node_i.parent != None:
-				back[agent] = [node_i.n] + back[agent]
+				back[agent] = [node_i] + back[agent]
 				node_i = node_i.parent
 
-			back[agent] = [node_i.n] + back[agent]
+			back[agent] = [node_i] + back[agent]
 
 		for i in range(len(back)):
-			l = [back[a][i] for a in range(self.n_agents)]
+			l = [back[a][i].n for a in range(self.n_agents)]
 			# vv Sera que podemos aumentar mais que um ? vv
-			self.limit += 1
-			if len(l) != len(set(l)): 
+			if len(l) != len(set(l)):
+				self.limit += 1
 				return self.searchLimited(self.source, limitexp, limitdepth, tickets)
 
-		return back
+		formatted_path = [[[], [path[0].n for path in back]]]
+		for i in range(1, self.limit+1):
+			formatted_path.append([[path[i].ticketUsed for path in back], [path[i].n for path in back]])
+		return formatted_path
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.source = init
 		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
 
 		return self.searchLimited(init, limitexp, limitdepth, tickets)
-
-I = [1, 7]
-SP = SearchProblem(goal=[4, 3], model=U)
+"""
+I = [1, 3, 7]
+SP = SearchProblem(goal=[2, 21, 9], model=U)
 print(SP.search(I, limitexp=2000))
 pass
+"""
