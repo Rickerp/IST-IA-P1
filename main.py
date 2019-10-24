@@ -38,16 +38,16 @@ class SearchProblem:
 		self.graph = model
 		self.n_agents = len(self.goal)
 
-		self.sel = [[]]*self.n_agents
+		self.sel = None
 		self.exp = list()
-		self.gen = [[]]*self.n_agents
+		self.gen = None
 
 		self.path = list()
 		return
 
-	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
-		self.source = init
-		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
+	def searchLimited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+
+		self.gen = [[] for i in range(self.n_agents)]
 		self.sel = [[Node(sel_a, None, 0)] for sel_a in self.source]
 		# self.gen = [[s_agent] for s_agent in self.source] # [[], [], []]
 
@@ -55,6 +55,9 @@ class SearchProblem:
 			# Cada jogada
 			for a in range(self.n_agents):
 				# Now we got the selected of each agent
+				# vv Se ja chegou a solucao do agente, sair vv
+				if self.sel[a][-1].n == self.goal[a] and self.sel[a][-1].depth == self.limit:
+					continue
 
 				# vv Expandir o selecionado vv
 				for [transport, child_n] in self.graph[self.sel[a][-1].n]:
@@ -62,11 +65,14 @@ class SearchProblem:
 					# if child in self.sel[a] or child in self.gen[a]: continue
 
 					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1)
-					if child.depth <= self.limit: self.gen[a].append(child) # <-- Gerar
-
-				self.sel[a].append(self.gen[a].pop()) # <-- Gerado é selecionado
-
-		
+					# if child.depth < self.limit or child.n == self.goal[a]:
+					# if child.depth <= self.limit :
+					if child.depth + self.h[child.n][self.goal[a]] <= self.limit:
+						self.gen[a].append(child)  # <-- Gerar
+				if not self.gen[a]:
+					self.limit += 1
+					return self.searchLimited(init, limitexp, limitdepth, tickets)
+				self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
 		back = list()
 		for agent in range(self.n_agents):
 			back.append([])
@@ -75,13 +81,18 @@ class SearchProblem:
 			while node_i.parent != None:
 				back[agent] = [node_i.n] + back[agent]
 				node_i = node_i.parent
-			
+
 			back[agent] = [node_i.n] + back[agent]
 
 		return back
-		
-SP = SearchProblem(goal=[113], model=U)
-I = [18]
 
+	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+		self.source = init
+		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
+
+		return self.searchLimited(init, limitexp, limitdepth, tickets)
+
+I = [1, 1]
+SP = SearchProblem(goal=[2, 3], model=U)
 print(SP.search(I, limitexp=2000))
 pass
