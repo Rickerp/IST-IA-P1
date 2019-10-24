@@ -20,7 +20,7 @@ class Node:
 		self.n = number
 		self.parent = parent
 		self.depth = depth
-		self.ticketUsed = ticketUsed
+		self.ticket = ticketUsed
 		return
 
 class SearchProblem:
@@ -39,60 +39,88 @@ class SearchProblem:
 		self.n_agents = len(self.goal)
 
 		self.sel = None
-		self.exp = list()
 		self.gen = None
-
-		self.path = list()
+		
+		self.sol = None
 		return
 
-	def searchLimited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+	def get_path(self, combs):
+		path = []
 
-		self.gen = [[] for i in range(self.n_agents)]
+		for a in range(self.n_agents):
+			path.append([])
+			i_node = self.sol[a][combs[a]]
+			while i_node != None:
+				path[a] = [i_node] + path[a]
+				i_node = i_node.parent
+
+		for i in range(len(path)):
+			play = [path[a][i].n for a in range(self.n_agents)]
+			if len(play) != len(set(play)):
+				for n in range(1, len(combs) + 1):
+					combs[-n] = (combs[-n] + 1) % len(self.sol[-n])
+					if combs[-n] != 0: return self.get_path(combs)
+				return None
+		
+		return path
+
+
+	def search_limited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.sel = [[Node(sel_a, None, 0)] for sel_a in self.source]
-		# self.gen = [[s_agent] for s_agent in self.source] # [[], [], []]
+		self.sol = [[] for i in range(self.n_agents)]
 
-		while [self.sel[a][-1].n for a in range(self.n_agents)] != self.goal:
+		emptyGen = [[] for i in range(self.n_agents)]
+		self.gen = [[] for i in range(self.n_agents)]
+		first = True
+
+		while self.gen != emptyGen or first:
+			first = False
 			# Cada jogada
 			for a in range(self.n_agents):
-				# Now we got the selected of each agent
 				# vv Se ja chegou a solucao do agente, sair vv
 				if self.sel[a][-1].n == self.goal[a] and self.sel[a][-1].depth == self.limit:
-					continue
+					self.sol[a].append(self.sel[a][-1])
 
 				# vv Expandir o selecionado vv
 				for [transport, child_n] in self.graph[self.sel[a][-1].n]:
 					# # Verificar se ja existia o child no selected ou no gen
 					# if child in self.sel[a] or child in self.gen[a]: continue
 
-					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1)
+					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1, transport)
 					# if child.depth < self.limit or child.n == self.goal[a]:
-					# if child.depth <= self.limit :
 					if child.depth + self.h[child.n][self.goal[a]] <= self.limit:
 						self.gen[a].append(child)  # <-- Gerar
-				if not self.gen[a]:
+
+				# vv Se no agente nao houver gerados nem solucao, aumentar limite vv
+				if not self.gen[a] and not self.sol[a]: 
 					self.limit += 1
-					return self.searchLimited(init, limitexp, limitdepth, tickets)
-				self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
-		back = list()
-		for agent in range(self.n_agents):
-			back.append([])
-			node_i = self.sel[agent][-1]
+					return self.search_limited(self.source, limitexp, limitdepth, tickets)
+				
+				if self.gen[a]:
+					self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
 
-			while node_i.parent != None:
-				back[agent] = [node_i.n] + back[agent]
-				node_i = node_i.parent
+		if [] in self.sol: # Se a solucao de um agente for uma lista vazia
+			self.limit += 1
+			return self.search_limited(self.source, limitexp, limitdepth, tickets)
 
-			back[agent] = [node_i.n] + back[agent]
+		path = self.get_path([0, 0, 0])
+		if not path: 	
+			self.limit += 1
+			return self.searchLimited(self.source, limitexp, limitdepth, tickets)
 
-		return back
+		formatted_path = [[[], [i[0].n for i in path]]]
+		for i in range(1, self.limit + 1):
+			formatted_path.append([[a[i].ticket for a in path], [a[i].n for a in path]])
+		return formatted_path
+
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
 		self.source = init
 		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
 
-		return self.searchLimited(init, limitexp, limitdepth, tickets)
+		return self.search_limited(init, limitexp, limitdepth, tickets)
 
-I = [1, 1]
-SP = SearchProblem(goal=[2, 3], model=U)
+I = [30, 40, 109]
+SP = SearchProblem(goal=[63, 61, 70], model=U)
 print(SP.search(I, limitexp=2000))
 pass
