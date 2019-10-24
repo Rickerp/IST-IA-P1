@@ -64,8 +64,8 @@ class SearchProblem:
 				for [transport, child_n] in self.graph[self.sel[a][-1].n]:
 					# # Verificar se ja existia o child no selected ou no gen
 					# if child in self.sel[a] or child in self.gen[a]: continue
-					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1)
 
+					child = Node(child_n, self.sel[a][-1], self.sel[a][-1].depth + 1, transport)
 					# if child.depth < self.limit or child.n == self.goal[a]:
 					if child.depth + self.h[child.n][self.goal[a]] <= self.limit:
 						self.gen[a].append(child)  # <-- Gerar
@@ -75,8 +75,6 @@ class SearchProblem:
 		if [] in self.sol: # Se a solucao de um agente for uma lista vazia
 			self.limit += 1
 			return self.searchLimited(self.source, limitexp, limitdepth, tickets)
-
-		
 
 		return 
 
