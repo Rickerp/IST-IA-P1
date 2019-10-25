@@ -51,7 +51,7 @@ class SearchProblem:
 		for a in range(self.n_agents):
 			path.append([])
 			i_node = self.sol[a][combs[a]]
-			while i_node.parent != None:
+			while i_node.parent:
 				path[a] = [i_node] + path[a]
 				tickets[i_node.ticket] += 1
 				i_node = i_node.parent
@@ -90,9 +90,6 @@ class SearchProblem:
 			first = False
 			# Cada jogada
 			for a in range(self.n_agents):
-				# vv Se ja chegou a solucao do agente, sair vv
-				if self.sel[a][-1].n == self.goal[a] and self.sel[a][-1].depth == self.limit:
-					self.sol[a].append(self.sel[a][-1])
 
 				# vv Expandir o selecionado vv
 				for [transport, child_n] in self.graph[self.sel[a][-1].n]:
@@ -111,6 +108,9 @@ class SearchProblem:
 				
 				if self.gen[a]:
 					self.sel[a].append(self.gen[a].pop())  # <-- Gerado é selecionado
+					# vv Se ja chegou a solucao do agente, sair vv
+					if self.sel[a][-1].n == self.goal[a] and self.sel[a][-1].depth == self.limit:
+						self.sol[a].append(self.sel[a][-1])
 
 		if [] in self.sol:  # Se a solucao de um agente for uma lista vazia
 			self.limit += 1
@@ -133,7 +133,7 @@ class SearchProblem:
 
 		return self.search_limited(init, limitexp, limitdepth, tickets)
 
-I = [30, 40, 109]
-SP = SearchProblem(goal=[61, 60, 71], model=U)
+I = [87, 66, 110]
+SP = SearchProblem(goal=[94, 69, 77], model=U)
 print(SP.search(I, limitexp=2000))
 pass
