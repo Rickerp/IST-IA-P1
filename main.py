@@ -46,16 +46,28 @@ class SearchProblem:
 
 	def get_path(self, combs):
 		path = []
+		tickets = [0 for t in range(len(self.tickets))]
 
 		for a in range(self.n_agents):
 			path.append([])
 			i_node = self.sol[a][combs[a]]
-			while i_node != None:
+			while i_node.parent != None:
 				path[a] = [i_node] + path[a]
+				tickets[i_node.ticket] += 1
 				i_node = i_node.parent
+			path[a] = [i_node] + path[a]
 
+		# vv Verificar limites de bilhetes vv
+		for type_t in range(len(tickets)):
+			if tickets[type_t] > self.tickets[type_t]:
+				for n in range(1, len(combs) + 1):
+					combs[-n] = (combs[-n] + 1) % len(self.sol[-n])
+					if combs[-n] != 0: return self.get_path(combs)
+				return None
+
+		# vv Verificar colisao por jogada vv
 		for i in range(len(path)):
-			play = [path[a][i].n for a in range(self.n_agents)]
+			play = [path[a][i].n for a in range(self.n_agents)]	
 			if len(play) != len(set(play)):
 				for n in range(1, len(combs) + 1):
 					combs[-n] = (combs[-n] + 1) % len(self.sol[-n])
@@ -66,11 +78,12 @@ class SearchProblem:
 
 
 	def search_limited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+		self.tickets = tickets
 		self.sel = [[Node(sel_a, None, 0)] for sel_a in self.source]
 		self.sol = [[] for i in range(self.n_agents)]
+		self.gen = [[] for i in range(self.n_agents)]
 
 		emptyGen = [[] for i in range(self.n_agents)]
-		self.gen = [[] for i in range(self.n_agents)]
 		first = True
 
 		while self.gen != emptyGen or first:
@@ -121,6 +134,6 @@ class SearchProblem:
 		return self.search_limited(init, limitexp, limitdepth, tickets)
 
 I = [30, 40, 109]
-SP = SearchProblem(goal=[63, 61, 70], model=U)
+SP = SearchProblem(goal=[61, 60, 71], model=U)
 print(SP.search(I, limitexp=2000))
 pass
