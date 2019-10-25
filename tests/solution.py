@@ -135,6 +135,10 @@ class SearchProblem:
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf], anyorder=False):
 		self.source = init
 
+		# print(self.source)
+		# print(self.goal)
+		# print("")
+
 		if (anyorder):
 			min_limit = math.inf
 
@@ -161,4 +165,5 @@ class SearchProblem:
 			self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
 
 		return self.search_limited(init, limitexp, limitdepth, tickets)
+
 
