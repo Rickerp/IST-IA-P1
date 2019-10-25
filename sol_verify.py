@@ -26,7 +26,7 @@ def plotpath(P,coords):
         fig = plt.gcf()
         fig.set_size_inches(1.*18.5, 1.*10.5)
         #fig.savefig('test2png.png', dpi=100)   
-        plt.show()
+        #plt.show()
         
 def validatepath(oP,oI,U,tickets=[25,25,25]): 
         print(oP)
@@ -86,7 +86,7 @@ else:
         print("invalid path")
 
 print("\n(4 val) Exercise 2 - One agent, Limits")
-print("Init [30] Goal [56]")
+print("Init [30] Goal [56] Tickets [5, 5, 2]")
 SP = SearchProblem(goal = [56], model = U, auxheur=coords)
 tinit = time.process_time()
 I = [30]
@@ -131,7 +131,7 @@ else:
         print("invalid path")
         
 print("\n(4 val) Exercise 4 - Three agents, Limits")
-print("Init [30,40,109] Goal [61,60,71]")
+print("Init [30,40,109] Goal [61,60,71] Tickets [5, 20, 2]")
 SP = SearchProblem(goal = [63,61,70], model = U, auxheur=coords)
 tinit = time.process_time()
 I = [30,40,109]
@@ -146,7 +146,7 @@ else:
         print("invalid path")
 
 print("\n(4 val) Exercise 5 - Three agents, Limits, Any-Order")
-print("Init [30,40,109] Goal [61,60,71]")
+print("Init [30,40,109] Goal [61,60,71] Tickets [5, 20, 2] AnyOrder True")
 SP = SearchProblem(goal = [63,61,70], model = U, auxheur=coords)
 tinit = time.process_time()
 I = [30,40,109]

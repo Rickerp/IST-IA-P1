@@ -56,6 +56,7 @@ class SearchProblem:
 				i_node = self.sol[a][combs[a]]
 				while i_node.parent:
 					path[a] = [i_node] + path[a]
+					tickets[i_node.ticket] += 1
 					i_node = i_node.parent
 				path[a] = [i_node] + path[a]
 
@@ -165,11 +166,14 @@ class SearchProblem:
 		return self.search_limited(init, limitexp, limitdepth, tickets)
 
 
+init       = [30, 40, 109]
+goal       = [63,61,70]
+tickets    = [5,20,2]
+anyorder   = True
 
-I = [54, 8, 23]
-goal = [72, 25, 40]
-tickets = [6, 8, 7]
-SP = SearchProblem(goal = [79, 60, 71], model = U)
-nn = SP.search(I,limitexp = 2000, tickets = [7, 7, 8], anyorder=True)
+print("I=" + str(init) + ", goal= " + str(goal) + ", tickets=" + str(tickets) + ", anyorder=" + str(anyorder))
+
+SP = SearchProblem(goal = goal, model = U)
+nn = SP.search(init = init,limitexp = 2000, tickets = tickets, anyorder=anyorder)
 print(nn)
 pass
