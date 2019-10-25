@@ -1,0 +1,7 @@
+init       [51, 5, 76]
+goal       [49, 1, 55]
+tickets    [9, 7, 9]
+time       0.0
+error
+solution   [[[], [51, 5, 76]], [[0, 1, 0], [63, 6, 56]], [[0, 0, 1], [49, 1, 55]]]
+any order  False
