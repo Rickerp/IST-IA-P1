@@ -9,7 +9,7 @@ import copy
 from common import Sample
 
 class Config:
-	amount = 1000
+	amount = 10000
 	agents = 3
 
 	states = range(1, 113 + 1)
@@ -23,7 +23,7 @@ class Config:
 	limit_depth_error = 10
 	limit_exp_error = 1000
 
-	any_order = False
+	any_order = True
 
 class Generator:
 	def __init__(self):
