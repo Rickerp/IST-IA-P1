@@ -1,5 +1,7 @@
-__*__
-.idea
-*/__*__
-.vscode
 tests/output
+
+__*__
+*/__*__
+**/__*__
+.idea
+.vscode
