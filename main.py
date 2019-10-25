@@ -86,11 +86,12 @@ class SearchProblem:
 
 
 	def search_limited(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+		self.tickets = tickets
 		self.sel = [[Node(sel_a, None, 0)] for sel_a in self.source]
 		self.sol = [[] for i in range(self.n_agents)]
+		self.gen = [[] for i in range(self.n_agents)]
 
 		emptyGen = [[] for i in range(self.n_agents)]
-		self.gen = [[] for i in range(self.n_agents)]
 		first = True
 
 		while self.gen != emptyGen or first:
@@ -126,7 +127,7 @@ class SearchProblem:
 		path = self.get_path()
 		if not path: 	
 			self.limit += 1
-			return self.searchLimited(self.source, limitexp, limitdepth, tickets)
+			return self.search_limited(self.source, limitexp, limitdepth, tickets)
 
 		formatted_path = [[[], [i[0].n for i in path]]]
 		for i in range(1, self.limit + 1):
@@ -134,7 +135,7 @@ class SearchProblem:
 		return formatted_path
 
 
-	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf]):
+	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf], anyorder=False):
 		self.source = init
 
 		if (anyorder):
