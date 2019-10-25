@@ -137,11 +137,35 @@ class SearchProblem:
 
 	def search(self, init, limitexp=2000, limitdepth=10, tickets=[math.inf, math.inf, math.inf], anyorder=False):
 		self.source = init
-		self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
+
+		if (anyorder):
+			min_limit = math.inf
+
+			zero_combs = [a for a in range(self.n_agents)]
+			combs = zero_combs[:]
+			first = True
+
+			while combs != zero_combs or first:
+				first = False
+
+				if (len(combs) == len(set(combs))):
+					limit = max(self.h[self.source[a]][self.goal[combs[a]]] for a in range(self.n_agents))
+					if limit < min_limit: 
+						min_goal = [self.goal[combs[a]] for a in range(self.n_agents)]
+						min_limit = limit
+
+				for n in range(1, len(combs) + 1):
+					combs[-n] = (combs[-n] + 1) % self.n_agents
+					if combs[-n] != 0:  break
+			
+			self.limit = min_limit
+			self.goal = min_goal
+		else:
+			self.limit = max(self.h[self.source[i]][self.goal[i]] for i in range(self.n_agents))
 
 		return self.search_limited(init, limitexp, limitdepth, tickets)
 
-I = [104, 64, 103]
-SP = SearchProblem(goal= [47, 69, 95], model=U)
-print(SP.search(I, limitexp=2000))
+I = [1, 2, 3]
+SP = SearchProblem(goal= [11, 12, 13], model=U)
+print(SP.search(I, limitexp=2000, anyorder=True))
 pass
