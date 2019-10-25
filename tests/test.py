@@ -182,6 +182,8 @@ def main():
 		fp.write("elapsed: {}\n".format(time_total))
 		fp.write(summary_table)
 
+	print(summary_table)
+
 	print("passed: %d (%.2f%%), failed: %d (%.2f%%), total: %d (%fms)" % (
 		passed,
 		passed * 100 / total,
@@ -189,8 +191,6 @@ def main():
 		failed * 100 / total,
 		total,
 		time_total))
-
-	print(summary_table)
 
 if __name__ == "__main__":
 	main()
