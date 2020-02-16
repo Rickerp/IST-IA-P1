@@ -42,7 +42,7 @@ where, for example, looking at `[[2, 0, 1], [69, 41, 84]]`:  
 2. Run like in example above  
 
 ## Made by...
-### &nbsp; &nbsp; [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/rickerp "rickerp") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rickerp/ "rickerp") &nbsp;**Ricardo Fernandes**
-### &nbsp; &nbsp; [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/VivaRafael "VivaRafael") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rafael-galhoz/ "rafael-galhoz") &nbsp;**Rafael Galhoz**
+&nbsp; &nbsp; Ricardo Fernandes - [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/rickerp "rickerp") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rickerp/ "rickerp")  
+&nbsp; &nbsp; Rafael Galhoz - [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/VivaRafael "VivaRafael") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rafael-galhoz/ "rafael-galhoz")    
 
 
