@@ -36,3 +36,7 @@ where, for example, looking at `[[2, 0, 1], [69, 41, 84]]`:  
 * The third agent used the bus(1) to get to node 84
 
 ## Check ![project.pdf](https://github.com/Rickerp/IST-IA-P1/blob/master/assets/project.pdf) for more detailed info (in portuguese)
+
+## Running
+1. Import main file `import main`  
+2. Run like in example above  
