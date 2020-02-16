@@ -41,8 +41,11 @@ where, for example, looking at `[[2, 0, 1], [69, 41, 84]]`:  
 1. Import main file `import main`  
 2. Run like in example above  
 
-## Made by...
-&nbsp; &nbsp; Ricardo Fernandes - [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/rickerp "rickerp") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rickerp/ "rickerp")  
-&nbsp; &nbsp; Rafael Galhoz - [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/VivaRafael "VivaRafael") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rafael-galhoz/ "rafael-galhoz")    
+## Authors
+&nbsp; &nbsp; Ricardo Fernandes -   
+&nbsp; &nbsp; Rafael Galhoz -     
 
-
+| Name | University | More info |
+| ---- | ---- | ---- |
+| Ricardo Fernandes | Instituto Superior Técnico | [<img src="http://simpleicon.com/wp-content/uploads/mail-6.png" width="17">](mailto:ricardo.s.fernandes@tecnico.ulisboa.pt "ricardo.s.fernandes@tecnico.ulisboa.pt") [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/rickerp "rickerp") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rickerp/ "rickerp") |
+| Rafael Galhoz | Instituto Superior Técnico | [<img src="http://simpleicon.com/wp-content/uploads/mail-6.png" width="17">](mailto:rafael.galhoz@tecnico.ulisboa.pt "rafael.galhoz@tecnico.ulisboa.pt") [<img src="https://github.githubassets.com/favicon.ico" width="17">](https://github.com/VivaRafael "VivaRafael") [<img src="https://lh3.googleusercontent.com/proxy/oq401pwCVsfk2PJuOfNyTxLKF9ZEztDHNE3ejoa7zgyGdjD8-jAiIEUTHXkpnQRychlZBaNsMPeFDjdkEB-TW3ORMtg0NNmpGdJGyr0" width="17">](https://www.linkedin.com/in/rafael-galhoz/ "rafael-galhoz") |
