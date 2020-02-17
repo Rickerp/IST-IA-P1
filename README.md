@@ -35,6 +35,10 @@ where, for example, looking at `[[2, 0, 1], [69, 41, 84]]`:  
 * The second agent used a taxi(0) to get to node 41
 * The third agent used the bus(1) to get to node 84
 
+## Solution
+
+The solution implemented is based on [Iterative deepening A* (IDA*)](https://en.wikipedia.org/wiki/Iterative_deepening_A*) 
+
 ## Check ![project.pdf](https://github.com/Rickerp/IST-IA-P1/blob/master/assets/project.pdf) for more detailed info (in portuguese)
 
 ## Running
